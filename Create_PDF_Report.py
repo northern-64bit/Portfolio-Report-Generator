@@ -5,6 +5,17 @@ import matplotlib.pyplot as plt
 
 # import pyPdf
 
+sector_dict = {"Industri": "Industry",
+               "Konsument, cyklisk": "Consumer goods, cyclical",
+               "Finans": "Finance",
+               "Konsument, stabil": "Consumer goods, stable",
+               "Sjukvård": "Health Care",
+               "Teknik": "Technology",
+               "Fastigheter": "Real Estate",
+               "Råvaror": "Commodities",
+               "Kommunikation": "Telecommunication",
+               "Allmännyttigt": "Utilities",
+               "Energi": "Energy"}
 
 class PDF(FPDF):
     def lines(self):
@@ -52,7 +63,7 @@ class PDF(FPDF):
         self.set_text_color(255)
         self.set_draw_color(225, 225, 225)
         self.set_line_width(0.3)
-        self.set_font(style="B", size=6)
+        self.set_font('helvetica', style="B", size=6)
         # Header
 
         if position_y != 0:
@@ -163,7 +174,7 @@ class PDF(FPDF):
                 table_row = []
                 for data in current_data['sectorChartData']:
                     table_row_temp = []
-                    table_row_temp.append(data['name'])
+                    table_row_temp.append(sector_dict[data['name']])
                     table_row_temp.append(str(data['y']))
                     table_row.append(table_row_temp)
                 header = ["Sector (SE)", "Allocation in %"]

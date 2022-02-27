@@ -139,18 +139,19 @@ class PDF(FPDF):
             i_name_num += 0.1
             if in_ava_fund[i]:
                 current_data = ava_fund_list_info[i_ava]
-                text = "Swedish Description:\n\n" + current_data['description'] + "\n\nThe fund is managed by:\n"
+                current_data = avanza_model.get_data(fund_name)
+                text = f"Swedish Description:\n\n{current_data['description']}\n\nThe fund is managed by:\n"
                 for manager in current_data['fundManagers']:
-                    text = text + "\t- " + manager['name'] + " since " + manager['startDate'] + '\n'
-                text = (text + "from " + current_data['adminCompany']['name'] + ". The currency of the fund is " +
-                        current_data['currency'] + " and it the fund started " + current_data['startDate']) + "."
+                    text = text + f"\t- {manager['name']} since {manager['startDate']}\n"
+                text = (text + f"from {current_data['adminCompany']['name']}. The currency of the fund is {current_data['currency']}"
+                        f" and it the fund started {current_data['startDate']}.")
                 if current_data['indexFund']:
                     text = text + " It is a index fund."
                 else:
                     text = text + " It is not a index fund."
-                text = (text + " The fund manages " + str(current_data['capital']) + current_data['currency'] + ". The "
-                        "standard deviation of the fund is " + str(current_data['standardDeviation']) + " and the sharpe "
-                        "ratio is " + str(current_data['sharpeRatio']) + ".")
+                text = (text + f" The fund manages {str(current_data['capital'])} {current_data['currency']}. The "
+                        f"standard deviation of the fund is {str(current_data['standardDeviation'])} and the sharpe "
+                        f"ratio is {str(current_data['sharpeRatio'])}.")
 
                 self.multi_cell(txt=text, w=0)
                 table_row = []
